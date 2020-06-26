@@ -82,14 +82,14 @@ X_train_final = pd.concat([imputed_X_train, oh_train], axis=1)
 X_valid_final = pd.concat([imputed_X_valid, oh_valid], axis=1)
 X_test_final = pd.concat([imputed_X_test, oh_test], axis=1)
 
-print(X_train_final.isnull().any())
-print(X_train_final.isna().any())
+# Define and fit model
+model = RandomForestRegressor(n_estimators=100, random_state=0)
+model.fit(X_train_final, y_train)
 
-# # Define and fit model
-# model = RandomForestRegressor(n_estimators=100, random_state=0)
-# model.fit(X_train_final, y_train)
+# Predict test outcomes
+preds_test = model.predict(X_test_final)
 
 # Save predictions to file
-# output = pd.DataFrame({'Id': X_test.index,
-#                        'SalePrice': preds_test})
-# output.to_csv('/Users/Jonas/Desktop/DataScience/Kaggle/Housing/PostNARemoval.csv', index=False)
+output = pd.DataFrame({'Id': X_test_final.index,
+                       'SalePrice': preds_test})
+output.to_csv('/Users/Jonas/Desktop/DataScience/Kaggle/Housing/PostOH.csv', index=False)
