@@ -72,12 +72,22 @@ imputed_X_train.columns = X_train_num.columns
 imputed_X_valid.columns = X_valid_num.columns
 imputed_X_test.columns = X_test_num.columns
 
+# Put the indices back (otherwise the concat later will produce NaNs where the indices don't match)
+imputed_X_train.index = X_train_num.index
+imputed_X_valid.index = X_valid_num.index
+imputed_X_test.index = X_test_num.index
+
 # Put the OH Encoded columns and the imputed columns back together in one DataFrame
 X_train_final = pd.concat([imputed_X_train, oh_train], axis=1)
 X_valid_final = pd.concat([imputed_X_valid, oh_valid], axis=1)
 X_test_final = pd.concat([imputed_X_test, oh_test], axis=1)
 
+print(X_train_final.isnull().any())
+print(X_train_final.isna().any())
 
+# # Define and fit model
+# model = RandomForestRegressor(n_estimators=100, random_state=0)
+# model.fit(X_train_final, y_train)
 
 # Save predictions to file
 # output = pd.DataFrame({'Id': X_test.index,
