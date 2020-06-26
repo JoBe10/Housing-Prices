@@ -72,6 +72,11 @@ imputed_X_train.columns = X_train_num.columns
 imputed_X_valid.columns = X_valid_num.columns
 imputed_X_test.columns = X_test_num.columns
 
+# Put the OH Encoded columns and the imputed columns back together in one DataFrame
+X_train_final = pd.concat([imputed_X_train, oh_train], axis=1)
+X_valid_final = pd.concat([imputed_X_valid, oh_valid], axis=1)
+X_test_final = pd.concat([imputed_X_test, oh_test], axis=1)
+
 
 
 # Save predictions to file
